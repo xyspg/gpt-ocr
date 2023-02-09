@@ -139,3 +139,13 @@ a {
 
 }
 
+.master-warning {
+    color: yellowgreen;
+    font-size: 1.5rem;
+    font-weight: 600;
+    background-color: white;
+  height: 100vh;
+  text-align: center;
+  padding-top: 50vh;
+
+}

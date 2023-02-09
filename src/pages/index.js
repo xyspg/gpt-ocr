@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import WeixinDetector from "@/pages/isWeChat";
 import Tesseract from "tesseract.js";
 import { InboxOutlined } from "@ant-design/icons";
 import { message, Upload } from "antd";
@@ -11,9 +12,10 @@ import { Spin } from "antd";
 import { Card } from "antd";
 import { Image } from 'antd';
 import { Divider } from 'antd';
+import { Modal } from 'antd';
 import dynamic from 'next/dynamic';
+import IsWeChat from "@/pages/isWeChat";
 const ImgCrop = dynamic(import('antd-img-crop'), { ssr: false });
-
 
 const antIcon = (
     <LoadingOutlined
@@ -32,6 +34,15 @@ const OCR = () => {
     const [step, setStep] = useState("");
     const [OCRProcessing, setOCRProcessing] = useState(false);
     const [OCRCompleted, setOCRCompleted] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const handleOk = () => {
+        setIsModalOpen(false);
+    };
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
+    // 上传图片并使用 Tesseract.js 进行 OCR
     const handleImageUpload = async (e) => {
         setOCRProcessing(true);
         console.log(e);
@@ -48,7 +59,7 @@ const OCR = () => {
         setOCRText(text);
         setOCRCompleted(true);
     };
-
+    // 将json返回的 /n 换行符转换为 <p> 标签
     function lineWrap(text) {
         const textWithLineBreaks = text
             .split("\n")
@@ -56,6 +67,7 @@ const OCR = () => {
         return textWithLineBreaks;
     }
 
+    // 上传图片组件
     const ImageUploader = () => (
 /*
         <ImgCrop
@@ -84,6 +96,8 @@ const OCR = () => {
             console.log("Dropped files", e.dataTransfer.files);
         },
     };
+    // 使用 OpenAI GPT-3 进行问答
+    // API Key 存储于环境变量中
     const handleQuestion = async () => {
         setProcessing(true);
         const response = await fetch("https://api.openai.com/v1/completions", {
@@ -106,12 +120,15 @@ const OCR = () => {
         setProcessing(false);
     };
     console.log(answer);
+
+    // 判断 OCR 进度
     function isOCROver() {
         if (progress === 1) {
             return null;
         }
         return step;
     }
+    //示例图片
     function demoImage(src){
         handleImageUpload({originFileObj: src})
     }
@@ -119,6 +136,11 @@ const OCR = () => {
     return (
         <>
             <div className="main-layout">
+                <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+                    <p>Some contents...</p>
+                    <p>Some contents...</p>
+                    <p>Some contents...</p>
+                </Modal>
                 <div className="upload-main">
                     <ImageUploader />
                     <Card
@@ -162,6 +184,7 @@ const OCR = () => {
                     </Card>
                 </div>
                 <Divider />
+                {/*示例图片*/}
                 <span className='OCR-text demo-text'> Try Demo:</span>
                 <div className='demo'>
                     <div className='demo-content'>
@@ -180,7 +203,7 @@ const OCR = () => {
                         />
                         <Button onClick={() => demoImage('/cs.png')}>AP Computer Science</Button>
                     </div>
-
+                    <br />
                 </div>
 
 
@@ -192,6 +215,7 @@ const OCR = () => {
 function Main() {
     return (
         <>
+        <WeixinDetector />
         <OCR />
         </>
     );
