@@ -170,7 +170,7 @@ const OCR = () => {
                             style={{marginBottom: 10}}
                             src='/chem.png'
                         />
-                        <Button onClick={() => demoImage('/chem.png')}>化学</Button>
+                        <Button onClick={() => demoImage('/chem.png')}>化学会考</Button>
                     </div>
                     <div className='demo-content'>
                         <Image
