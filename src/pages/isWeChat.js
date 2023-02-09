@@ -1,8 +1,12 @@
 import React, {useEffect, useState} from "react";
 
 const isWeixin = () => {
-    const ua = window.navigator.userAgent.toLowerCase();
-    return ua.match(/MicroMessenger/i) === "micromessenger";
+    let ua = navigator.userAgent.toLowerCase();
+    if(ua.match(/MicroMessenger/i)=="micromessenger") {
+        return true;
+    } else {
+        return false;
+    }
 };
 
 const WeixinDetector = () => {
