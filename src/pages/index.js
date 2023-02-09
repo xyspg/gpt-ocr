@@ -68,7 +68,7 @@ const OCR = () => {
                 <InboxOutlined />
             </p>
             <p className="ant-upload-text">点击拍照或将截图拖拽至此以上传</p>
-            <p className="ant-upload-hint">支持中文/英文识别，请正对题目拍摄</p>
+            <p className="ant-upload-hint">支持中文 / 英文识别，请正对题目拍摄</p>
         </Dragger>
         /*
         </ImgCrop>
