@@ -1,24 +1,26 @@
 import React, { useState,useEffect,useRef } from "react";
-import WeixinDetector from "@/pages/isWeChat";
 import Tesseract from "tesseract.js";
 import { InboxOutlined } from "@ant-design/icons";
 import { message, Upload } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import { Button, Space, Tooltip } from "antd";
-const { Dragger } = Upload;
 import { Progress } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
+import { Alert } from 'antd';
 import { Card } from "antd";
 import { Image } from 'antd';
 import { Divider } from 'antd';
 import { Modal } from 'antd';
 import dynamic from 'next/dynamic';
-import IsWeChat from "@/pages/isWeChat";
-const ImgCrop = dynamic(import('antd-img-crop'), { ssr: false });
+import IsWeiXin from "@/pages/isWeChat";
 import { Input } from 'antd';
+const ImgCrop = dynamic(import('antd-img-crop'), { ssr: false });
 const { TextArea } = Input;
-
+const { Dragger } = Upload;
+const onClose = (e) => {
+    console.log(e, 'I was closed.');
+};
 const antIcon = (
     <LoadingOutlined
         style={{
@@ -228,10 +230,33 @@ const OCR = () => {
     );
 };
 
+/*
+function WeChatDetector(){
+    const isWeiXin = IsWeiXin();
+    return (
+        <div>
+            {isWeiXin ?
+                        <div>
+                            您似乎正处于微信内置浏览器中<br />请点击右上角使用系统自带浏览器打开此网页
+                        </div>
+                : null}
+        </div>
+    );
+}
+
+ */
+
+
 function Main() {
     return (
         <>
-        <WeixinDetector />
+            <Alert
+
+                message="回答内容仅供参考。请在系统浏览器内访问本页面"
+                type="info"
+                closable
+                onClose={onClose}
+            />
         <OCR />
         </>
     );
