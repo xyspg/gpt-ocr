@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect,useRef } from "react";
 import WeixinDetector from "@/pages/isWeChat";
 import Tesseract from "tesseract.js";
 import { InboxOutlined } from "@ant-design/icons";
@@ -16,6 +16,8 @@ import { Modal } from 'antd';
 import dynamic from 'next/dynamic';
 import IsWeChat from "@/pages/isWeChat";
 const ImgCrop = dynamic(import('antd-img-crop'), { ssr: false });
+import { Input } from 'antd';
+const { TextArea } = Input;
 
 const antIcon = (
     <LoadingOutlined
@@ -35,6 +37,11 @@ const OCR = () => {
     const [OCRProcessing, setOCRProcessing] = useState(false);
     const [OCRCompleted, setOCRCompleted] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [value, setValue] = useState('');
+    const textAreaRef = useRef(null);
+    useEffect(() => {
+        textAreaRef.current.focus();
+    }, []);
 
     const handleOk = () => {
         setIsModalOpen(false);
@@ -87,7 +94,6 @@ const OCR = () => {
 
 
     );
-
     const props = {
         name: "file",
         multiple: false,
@@ -132,25 +138,35 @@ const OCR = () => {
     function demoImage(src){
         handleImageUpload({originFileObj: src})
     }
-
+    function handleKeyDown(event){
+        if(event.key === 'Enter'){
+            handleQuestion();
+            event.preventDefault()
+        }
+    }
     return (
         <>
             <div className="main-layout">
-                <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-                    <p>Some contents...</p>
-                    <p>Some contents...</p>
-                    <p>Some contents...</p>
-                </Modal>
                 <div className="upload-main">
                     <ImageUploader />
                     <Card
-                        title="OCR 结果"
+                        title="查看 OCR 结果或直接输入问题"
                         style={{
-                            width: "clamp(340px, 40vw, 724px)",
+                            width: "clamp(340px, 48vw, 724px)",
                             marginTop: 10,
                         }}
                     >
-                        <div className="OCR-text">{lineWrap(OCRText)}</div>
+                        <TextArea
+                            className="OCR-text"
+                            value={OCRText}
+                            onChange={(event) => setOCRText(event.target.value)}
+                            onKeyDown={handleKeyDown}
+                            ref={textAreaRef}
+                            autoSize={{
+                                minRows: 2,
+                                maxRows: 6,
+                            }}
+                            />
                     </Card>
                     <div
                         style={{
@@ -166,7 +182,7 @@ const OCR = () => {
                         type="primary"
                         icon={<SearchOutlined />}
                         onClick={handleQuestion}
-                        disabled={processing || !OCRCompleted}
+                        disabled={(processing || !OCRCompleted) && OCRText.length === 0}
                     >
                         Ask GPT
                     </Button>
@@ -176,7 +192,7 @@ const OCR = () => {
                     <Card
                         title="GPT返回结果"
                         style={{
-                            width: "clamp(340px, 40vw, 724px)",
+                            width: "clamp(340px, 48vw, 724px)",
                             marginTop: 10,
                         }}
                     >
