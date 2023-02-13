@@ -1,5 +1,6 @@
 import React, { useState,useEffect,useRef } from "react";
 import Tesseract from "tesseract.js";
+import Copyright from "@/components/copyright";
 import { InboxOutlined } from "@ant-design/icons";
 import { message, Upload } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
@@ -258,6 +259,7 @@ function Main() {
                 onClose={onClose}
             />
         <OCR />
+        <Copyright />
         </>
     );
 }
