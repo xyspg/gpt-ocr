@@ -53,11 +53,15 @@ body {
   height: 100vh;
   overflow-x: hidden;
   font-family: Helvetica;
+  /*
   background: linear-gradient(
           to bottom right,
           rgb(var(--background-start-rgb)),
           rgb(var(--background-end-rgb))
   );
+
+   */
+  background: white;
 }
 
 a {
@@ -68,6 +72,7 @@ a {
 .upload-main {
   width: clamp(340px, 48vw, 724px);
   margin-bottom: 1rem;
+  color: #F7F6F8
 }
 .OCR-text {
   padding: 1rem;
