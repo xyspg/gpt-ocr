@@ -139,7 +139,12 @@ a {
 }
 
 .copyright {
-    font-size: 0.8rem;
-    color: #F7F6F8;
+    font-size: 1rem;
+    color: black;
     margin-top: 1rem;
+
+}
+.copyright a{
+    font-weight: bold;
+    text-decoration: none;
 }
