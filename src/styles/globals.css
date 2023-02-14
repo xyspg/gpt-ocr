@@ -61,7 +61,7 @@ body {
   );
 
    */
-  background: white;
+  background-image: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%);
 }
 
 a {
@@ -136,4 +136,10 @@ a {
   .demo {
     flex-direction: column;
   }
+}
+
+.copyright {
+    font-size: 0.8rem;
+    color: #F7F6F8;
+    margin-top: 1rem;
 }
