@@ -15,6 +15,8 @@ import { Modal } from 'antd';
 import dynamic from 'next/dynamic';
 import IsWeiXin from "@/pages/isWeChat";
 import { Input } from 'antd';
+import footer from "@/components/footer";
+import Footer from "@/components/footer";
 const ImgCrop = dynamic(import('antd-img-crop'), { ssr: false });
 const { TextArea } = Input;
 const { Dragger } = Upload;
@@ -223,7 +225,13 @@ const OCR = () => {
                     </div>
                     <br />
                 </div>
-
+                <div className='copyright'>
+                    <p>Powered by OpenAI and Next.js. View it on
+                        <a
+                            href='https://github.com/xyspg/gpt-ocr'
+                            target='_blank'
+                    > Github</a>.</p>
+                </div>
 
             </div>
         </>
