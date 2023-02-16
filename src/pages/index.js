@@ -60,7 +60,7 @@ const OCR = () => {
         const image = e.originFileObj;
         const {
             data: { text },
-        } = await Tesseract.recognize(image, "eng+chi_sim", {
+        } = await Tesseract.recognize(image, "eng+chi_sim+jpn", {
             logger: (m) => {
                 console.log(m);
                 setProgress(m.progress);

@@ -96,6 +96,7 @@ a {
 
 .status {
   margin-top: 3rem;
+  color: black;
 }
 .demo {
   display: flex;
