@@ -108,25 +108,24 @@ const OCR = () => {
     };
     // 使用 OpenAI GPT-3 进行问答
     // API Key 存储于环境变量中
+
+
     const handleQuestion = async () => {
         setProcessing(true);
-        const response = await fetch("https://api.openai.com/v1/completions", {
+        const response = await fetch("https://api.openai.com/v1/chat/completions", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
                 Authorization: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
             },
             body: JSON.stringify({
-                prompt: OCRText,
-                model: "text-davinci-003",
-                max_tokens: 500,
-                temperature: 0.5,
+                messages: [{role: "user", content: OCRText}],
+                model: "gpt-3.5-turbo",
             }),
         });
         const data = await response.json();
-        console.log(data);
-        setAnswer(data.choices[0].text);
-        console.log(answer);
+       setAnswer(data.choices[0].message.content);
+        // setAnswer(data.choices[0].message);
         setProcessing(false);
     };
     console.log(answer);
