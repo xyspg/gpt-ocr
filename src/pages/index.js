@@ -204,30 +204,6 @@ const OCR = () => {
             <div className="OCR-text">{lineWrap(answer)}</div>
           </Card>
         </div>
-        <Divider />
-        {/*示例图片*/}
-        <span className="OCR-text demo-text"> Try Demo:</span>
-        <div className="demo">
-          <div className="demo-content">
-            <Image
-              width={"clamp(340px, 40vw, 724px)"}
-              style={{ marginBottom: 10 }}
-              src="/chem.png"
-            />
-            <Button onClick={() => demoImage("/chem.png")}>化学会考</Button>
-          </div>
-          <div className="demo-content">
-            <Image
-              width={"clamp(320px, 20vw, 424px)"}
-              style={{ marginBottom: 10 }}
-              src="/cs.png"
-            />
-            <Button onClick={() => demoImage("/cs.png")}>
-              AP Computer Science
-            </Button>
-          </div>
-          <br />
-        </div>
         <div className="copyright">
           <p>
             Powered by OpenAI and Next.js. View it on

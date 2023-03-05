@@ -53,15 +53,14 @@ body {
     height: 100vh;
     overflow-x: hidden;
     font-family: Helvetica;
-    /*
+
     background: linear-gradient(
             to bottom right,
             rgb(var(--background-start-rgb)),
             rgb(var(--background-end-rgb))
     );
 
-     */
-    background-image: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%);
+
 }
 
 a {
@@ -143,6 +142,8 @@ a {
 }
 
 .copyright {
+    position: absolute;
+    bottom: 2rem;
     font-size: 1rem;
     color: black;
     margin-top: 1rem;
