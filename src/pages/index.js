@@ -267,8 +267,8 @@ function Main() {
   return (
     <>
       <Alert
-        message="回答内容仅供参考。请在系统浏览器内访问本页面"
-        type="info"
+        message="自2023年3月3日起，中国大陆封锁了 OpenAI 相关服务的访问，故本网站在大陆地区可能无法正常使用。"
+        type="warning"
         closable
         onClose={onClose}
       />

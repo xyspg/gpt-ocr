@@ -1,15 +1,18 @@
 # GPT - OCR
+
 This is a project that uses GPT-3 to search for questions by taking pictures.  
 Created with Next.js + Ant Design  
-Used Tesseract.js for OCR  
+Used Tesseract.js for OCR
 
 ## Features
+
 - Modern, fast, and responsive UI
 - Mobile & desktop support
 - Upload image by drag and drop
 - Don't have a question by hand? Select a demo image to try it out!
 
 ## Todos
+
 - Crop image before OCR
 - Use Google Vision API or Azure Computer Vision API to replace Tesseract.js
 
