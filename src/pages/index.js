@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import Tesseract from "tesseract.js";
+import Tesseract, { createWorker } from "tesseract.js";
 import {
   InboxOutlined,
   LoadingOutlined,
@@ -17,6 +17,7 @@ import {
   Upload,
 } from "antd";
 import dynamic from "next/dynamic";
+import worker from "tesseract.js";
 
 const ImgCrop = dynamic(import("antd-img-crop"), { ssr: false });
 const { TextArea } = Input;
@@ -47,7 +48,22 @@ const OCR = () => {
   useEffect(() => {
     textAreaRef.current.focus();
   }, []);
-
+  useEffect(() => {
+    const startOCR = async () => {
+      const { createWorker } = require("tesseract.js");
+      const worker = await createWorker({
+        logger: (m) => {
+          console.log(m);
+          setProgress(m.progress);
+          setStep(m.status);
+        },
+      });
+      await worker.loadLanguage("eng+chi_sim");
+      await worker.initialize("eng+chi_sim");
+      console.log("OCR engine initialized!");
+    };
+    startOCR();
+  }, []);
   const handleOk = () => {
     setIsModalOpen(false);
   };
@@ -55,20 +71,23 @@ const OCR = () => {
     setIsModalOpen(false);
   };
   // 上传图片并使用 Tesseract.js 进行 OCR
+
   const handleImageUpload = async (e) => {
-    setOCRProcessing(true);
-    console.log(e);
     const image = e.originFileObj;
-    const {
-      data: { text },
-    } = await Tesseract.recognize(image, "eng+chi_sim+jpn", {
-      logger: (m) => {
-        console.log(m);
-        setProgress(m.progress);
-        setStep(m.status);
-      },
-    });
-    setOCRText(text);
+    setOCRProcessing(true);
+    await (async () => {
+      const {
+        data: { text },
+      } = await worker.recognize(image, "eng+chi_sim", {
+        logger: (m) => {
+          setProgress(m.progress);
+          setStep(m.status);
+        },
+      });
+      console.log(text);
+      setOCRText(text);
+    })();
+
     setOCRCompleted(true);
   };
 
@@ -204,6 +223,7 @@ const OCR = () => {
             <div className="OCR-text">{lineWrap(answer)}</div>
           </Card>
         </div>
+
         <div className="copyright">
           <p>
             Powered by OpenAI and Next.js. View it on
