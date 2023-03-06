@@ -152,6 +152,7 @@ const OCR = () => {
 
   const md = require("markdown-it")().use(mdKatex).use(mdHighlight);
   const prettyAnswer = md.render(answer);
+  console.log(prettyAnswer);
   return (
     <>
       <Script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></Script>
