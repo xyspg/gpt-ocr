@@ -1,3 +1,4 @@
+import Head from "next/head";
 import React, { useEffect, useRef, useState } from "react";
 import Tesseract, { createWorker } from "tesseract.js";
 import {
@@ -170,6 +171,13 @@ const OCR = () => {
 
   return (
     <>
+      <Head>
+        <title>ChatOCR</title>
+        <meta
+          name="description"
+          content="Recognize text from image and ask ChatGPT"
+        />
+      </Head>
       <div className="main-layout">
         <div className="upload-main">
           <ImageUploader />
