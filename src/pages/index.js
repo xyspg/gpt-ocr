@@ -128,7 +128,9 @@ const OCR = () => {
   };
   // 使用 OpenAI GPT-3 进行问答
   // API Key 存储于环境变量中
-
+  const [conversation, setConversation] = useState([
+    { role: "system", content: "You are a helpful assistant." },
+  ]);
   const handleQuestion = async () => {
     setProcessing(true);
     const response = await fetch("https://api.openai.com/v1/chat/completions", {
@@ -138,16 +140,21 @@ const OCR = () => {
         Authorization: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
       },
       body: JSON.stringify({
-        messages: [{ role: "user", content: OCRText }],
+        messages: conversation.concat({ role: "user", content: OCRText }),
         model: "gpt-3.5-turbo",
       }),
     });
     const data = await response.json();
     setAnswer(data.choices[0].message.content);
-    // setAnswer(data.choices[0].message);
+    const newConversation = [
+      ...conversation,
+      { role: "user", content: OCRText },
+      { role: "assistant", content: answer },
+    ];
+    console.log(newConversation);
+    setConversation(newConversation);
     setProcessing(false);
   };
-  console.log(answer);
 
   // 判断 OCR 进度
   function isOCROver() {
