@@ -54,7 +54,6 @@ const OCR = () => {
       const { createWorker } = require("tesseract.js");
       const worker = await createWorker({
         logger: (m) => {
-          console.log(m);
           setProgress(m.progress);
           setStep(m.status);
         },
@@ -144,15 +143,16 @@ const OCR = () => {
         model: "gpt-3.5-turbo",
       }),
     });
+    console.log(conversation.concat({ role: "user", content: OCRText }));
     const data = await response.json();
-    setAnswer(data.choices[0].message.content);
+    const newAnswer = data.choices[0].message.content;
     const newConversation = [
       ...conversation,
       { role: "user", content: OCRText },
-      { role: "assistant", content: answer },
+      { role: "assistant", content: newAnswer },
     ];
-    console.log(newConversation);
     setConversation(newConversation);
+    setAnswer(newAnswer);
     setProcessing(false);
   };
 
