@@ -20,7 +20,7 @@ function Main() {
       </Head>
 
       <Alert
-        message="自2023年3月3日起，中国大陆封锁了 OpenAI 相关服务的访问，故本网站在大陆地区可能无法正常使用。"
+        message="由于OpenAI提供的免费API额度已用完，本站从今日起将不限期暂停服务"
         type="warning"
         closable
         onClose={onClose}
